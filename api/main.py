@@ -13,6 +13,7 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.responses import Response
 import requests
+import json
 
 app = FastAPI()
 
@@ -23,7 +24,9 @@ def get_hello():
 @app.get("/catphrase")
 def get_phrase():
     resp = requests.get("https://catfact.ninja/fact")
-    return JSONResponse(content=resp.text)
+    respJson = json.loads(resp.text)
+    print(respJson)
+    return JSONResponse(content=respJson["fact"])
 
 @app.get("/image")
 def get_image():
